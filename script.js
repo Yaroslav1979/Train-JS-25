@@ -145,6 +145,25 @@ postDataWithAuth(
 );
 
 //Завдання 5
+async function* asyncGenerator() {
+  let i=0;
+  while (true) {
+    await new Promise((resolve) => 
+    setTimeout(resolve, 1000)); 
+    yield i;   
+    i++;
+  }
+}
+  const gen = asyncGenerator();
+
+  async function printFiveItems() {
+    for await (let value of gen) {
+      console.log(value);
+      if (value === 4) {
+        break
+      }
+    }
+  }
 // Створюємо асинхронний генератор asyncGenerator, який виробляє числа з паузою в одну секунду.
 // "async function*" означає, що це асинхронний генератор.
 // Змінна "i" ініціалізована значенням 0 і буде збільшуватися на 1 при кожній ітерації.
@@ -161,8 +180,8 @@ postDataWithAuth(
 // Умова "if (value === 4) break" зупиняє цикл після виведення п'яти чисел (від 0 до 4).
 
 // Розкоментуйте після виконання завданння
-// console.log("Завдання: 5 ==============================");
-// printFiveItems();
+console.log("Завдання: 5 ==============================");
+printFiveItems();
 
 //Завдання 6
 
