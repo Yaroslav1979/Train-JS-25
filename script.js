@@ -212,6 +212,29 @@ async function getDataFromCache() {
   });
 }
 
+
+async function* gatherData() {
+  try {
+    let dbData = await getDataFromDB(); 
+       yield  dbData;
+
+    let apiData = await getDataFromAPI(); 
+       yield  apiData;
+
+    let cacheData = await getDataFromCache(); 
+       yield  cacheData;   
+  }
+  catch (error) {
+    console.error(error);
+  }  
+}
+async function displayData() {
+  const generator = gatherData();
+  console.log((await generator.next()).value);
+  console.log((await generator.next()).value);
+  console.log((await generator.next()).value);
+}
+
 // Оголошуємо асинхронну функцію-генератор з ім'ям gatherData
 // Використовуємо try для обробки помилок
 // Викликаємо асинхронну функцію getDataFromDB() і чекаємо, поки вона завершиться
@@ -229,11 +252,20 @@ async function getDataFromCache() {
 // Три рази виводимо виводимо поточне значення генератора в консоль
 
 // Розкоментуйте після виконання завданння
-// console.log("Завдання: 6 ==============================");
+console.log("Завдання: 6 ==============================");
 
-// displayData();
+displayData();
 
-//Завдання 7
+
+//Завдання 7\
+ function* countdownGenerator(start) {
+  let count = start;
+  while (count >= 0) {
+    yield count;
+    count--
+  }
+  
+}
 // Створюємо генератор countdownGenerator, який створює послідовність чисел від вказаного значення до 0, має параметр start
 // Ініціюємо лічильник змінну count зі стартовим значенням параметра start
 
@@ -242,7 +274,15 @@ async function getDataFromCache() {
 
 // Зменшуємо лічильник на 1
 
-// console.log("Завдання: 7 ==============================");
+console.log("Завдання: 7 ==============================");
+let  countdown = countdownGenerator(5);
+
+let nextValue = countdown.next();
+
+while (!nextValue.done) {
+console.log(nextValue.value)
+nextValue = countdown.next();
+}
 // Створюємо екземпляр генератора countdown з лічильниковм 5
 
 // Запускаємо генератор та отримуємо перше значення яку записуємо в змінну nextValue
